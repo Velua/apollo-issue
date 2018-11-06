@@ -15,6 +15,7 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 
 const cache = new InMemoryCache();
 
+// May ignore this, was used when testing with REST.
 const restLink = new RestLink({
   uri: "http://localhost:3001/"
 });
@@ -30,23 +31,8 @@ const resolvers = {
   Query: {
     liked: (_, args) => {
       console.log("***");
-      console.log("***");
-      console.log("***");
-      console.log("***");
       return {
         liked: {
-          isLiked: true
-          // __typename: "setting"
-        }
-      };
-    },
-    dogs: (_, args) => {
-      console.log("***");
-      console.log("***");
-      console.log("***");
-      console.log("***");
-      return {
-        dogs: {
           isLiked: true,
           __typename: "setting"
         }
@@ -54,11 +40,6 @@ const resolvers = {
     }
   }
 };
-
-const stateLink = withClientState({
-  cache,
-  defaults
-});
 
 const client = new ApolloClient({
   // link: ApolloLink.from([stateLink, restLink]),

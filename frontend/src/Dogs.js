@@ -2,26 +2,17 @@ import React from "react";
 import gql from "graphql-tag";
 import { Query } from "react-apollo";
 
-const GET_DOGSQ = gql`
-  query dogs {
-    dogs @rest(type: "Dog", path: "dogs") {
-      id
-      name
-      liked @client {
-        isLiked
-      }
-    }
-  }
-`;
-
-const GET_DOGSF = gql`
-  query dogs {
-    dogs {
-      id
-      name
-    }
-  }
-`;
+// const GET_DOGSQ = gql`
+//   query dogs {
+//     dogs @rest(type: "Dog", path: "dogs") {
+//       id
+//       name
+//       liked @client {
+//         isLiked
+//       }
+//     }
+//   }
+// `;
 
 const GET_DOGS = gql`
   query dogs {
@@ -29,9 +20,7 @@ const GET_DOGS = gql`
       id
       name
       liked @client {
-        liked {
-          isLiked
-        }
+        isLiked
       }
     }
   }
