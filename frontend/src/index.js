@@ -12,39 +12,30 @@ import { HttpLink } from "apollo-link-http";
 
 import ApolloClient from "apollo-client";
 import { InMemoryCache } from "apollo-cache-inmemory";
+import { typeDefs } from "./schema";
 
 const cache = new InMemoryCache();
 
-// May ignore this, was used when testing with REST.
-const restLink = new RestLink({
-  uri: "http://localhost:3001/"
-});
-
 const defaults = {
-  liked: {
-    __typename: "setting",
-    isLiked: false
-  }
+  // Dog: () => false
 };
 
 const resolvers = {
-  Query: {
-    liked: (_, args) => {
-      console.log("***");
-      return {
-        liked: {
-          isLiked: true,
-          __typename: "setting"
-        }
-      };
-    }
+  Dog: {
+    isLiked: () => false
   }
 };
 
+const stateLink = withClientState({
+  cache,
+  resolvers,
+  defaults,
+  typeDefs
+});
+
 const client = new ApolloClient({
-  // link: ApolloLink.from([stateLink, restLink]),
   link: ApolloLink.from([
-    withClientState({ resolvers, defaults }),
+    stateLink,
     new HttpLink({ uri: "http://localhost:4000" })
   ]),
   cache
